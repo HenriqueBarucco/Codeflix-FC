@@ -9,6 +9,7 @@ import com.fullcycle.admin.catalogo.infrastructure.category.persistence.Category
 import com.fullcycle.admin.catalogo.infrastructure.category.persistence.CategoryRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -57,7 +58,7 @@ public class CategoryMySQLGateway implements CategoryGateway {
         final var page = PageRequest.of(
                 aQuery.page(),
                 aQuery.perPage(),
-                Sort.by(Sort.Direction.fromString(aQuery.direction()), aQuery.sort())
+                Sort.by(Direction.fromString(aQuery.direction()), aQuery.sort())
         );
 
         // Busca dinamica pelo criterio terms (name ou description)

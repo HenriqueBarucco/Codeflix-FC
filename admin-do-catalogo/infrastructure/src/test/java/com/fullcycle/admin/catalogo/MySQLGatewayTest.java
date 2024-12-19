@@ -1,4 +1,4 @@
-package com.fullcycle.admin.catalogo.infrastructure;
+package com.fullcycle.admin.catalogo;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,3 +25,4 @@ import java.lang.annotation.*;
 @Tag("integrationTest")
 public @interface MySQLGatewayTest {
 }
+
