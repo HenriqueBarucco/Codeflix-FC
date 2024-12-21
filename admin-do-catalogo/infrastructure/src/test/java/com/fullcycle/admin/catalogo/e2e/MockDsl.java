@@ -2,10 +2,14 @@ package com.fullcycle.admin.catalogo.e2e;
 
 import com.fullcycle.admin.catalogo.domain.Identifier;
 import com.fullcycle.admin.catalogo.domain.category.CategoryId;
+import com.fullcycle.admin.catalogo.domain.genre.GenreId;
 import com.fullcycle.admin.catalogo.infrastructure.category.models.CategoryResponse;
 import com.fullcycle.admin.catalogo.infrastructure.category.models.CreateCategoryRequest;
 import com.fullcycle.admin.catalogo.infrastructure.category.models.UpdateCategoryRequest;
 import com.fullcycle.admin.catalogo.infrastructure.configuration.json.Json;
+import com.fullcycle.admin.catalogo.infrastructure.genre.models.CreateGenreRequest;
+import com.fullcycle.admin.catalogo.infrastructure.genre.models.GenreResponse;
+import com.fullcycle.admin.catalogo.infrastructure.genre.models.UpdateGenreRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -20,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public interface MockDsl {
 
     MockMvc mvc();
-    
+
     /**
      * Category
      */
@@ -53,6 +57,40 @@ public interface MockDsl {
 
     default ResultActions updateACategory(final CategoryId anId, final UpdateCategoryRequest aRequest) throws Exception {
         return this.update("/categories/", anId, aRequest);
+    }
+
+    /**
+     * Genre
+     */
+
+    default ResultActions deleteAGenre(final GenreId anId) throws Exception {
+        return this.delete("/genres/", anId);
+    }
+
+    default GenreId givenAGenre(final String aName, final boolean isActive, final List<CategoryId> categories) throws Exception {
+        final var aRequestBody = new CreateGenreRequest(aName, mapTo(categories, CategoryId::getValue), isActive);
+        final var actualId = this.given("/genres", aRequestBody);
+        return GenreId.from(actualId);
+    }
+
+    default ResultActions listGenres(final int page, final int perPage) throws Exception {
+        return listGenres(page, perPage, "", "", "");
+    }
+
+    default ResultActions listGenres(final int page, final int perPage, final String search) throws Exception {
+        return listGenres(page, perPage, search, "", "");
+    }
+
+    default ResultActions listGenres(final int page, final int perPage, final String search, final String sort, final String direction) throws Exception {
+        return this.list("/genres", page, perPage, search, sort, direction);
+    }
+
+    default GenreResponse retrieveAGenre(final GenreId anId) throws Exception {
+        return this.retrieve("/genres/", anId, GenreResponse.class);
+    }
+
+    default ResultActions updateAGenre(final GenreId anId, final UpdateGenreRequest aRequest) throws Exception {
+        return this.update("/genres/", anId, aRequest);
     }
 
     default <A, D> List<D> mapTo(final List<A> actual, final Function<A, D> mapper) {
@@ -102,8 +140,8 @@ public interface MockDsl {
     private <T> T retrieve(final String url, final Identifier anId, final Class<T> clazz) throws Exception {
         final var aRequest = get(url + anId.getValue())
                 // .with(ApiTest.ADMIN_JWT)
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON);
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON_UTF8);
 
         final var json = this.mvc().perform(aRequest)
                 .andExpect(status().isOk())
@@ -116,8 +154,8 @@ public interface MockDsl {
     private ResultActions retrieveResult(final String url, final Identifier anId) throws Exception {
         final var aRequest = get(url + anId.getValue())
                 // .with(ApiTest.ADMIN_JWT)
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON);
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON_UTF8);
 
         return this.mvc().perform(aRequest);
     }
@@ -132,11 +170,10 @@ public interface MockDsl {
 
     private ResultActions update(final String url, final Identifier anId, final Object aRequestBody) throws Exception {
         final var aRequest = put(url + anId.getValue())
-                // .with(ApiTest.ADMIN_JWT)
+                 // // .with(ApiTest.ADMIN_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(Json.writeValueAsString(aRequestBody));
 
         return this.mvc().perform(aRequest);
     }
 }
-
