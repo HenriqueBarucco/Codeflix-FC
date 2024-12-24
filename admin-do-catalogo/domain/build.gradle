@@ -23,9 +23,11 @@ configurations {
     }
 }
 
-test {
-    useJUnitPlatform()
+task testJar(type: Jar) {
+    archiveClassifier.set('test')
+    from sourceSets.test.output
 }
-kotlin {
-    jvmToolchain(17)
+
+artifacts {
+    testClasses testJar
 }

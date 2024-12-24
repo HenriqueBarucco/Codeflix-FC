@@ -46,6 +46,12 @@ dependencies {
 
     implementation('com.fasterxml.jackson.module:jackson-module-afterburner')
 
+    implementation('org.yaml:snakeyaml:1.33') {
+        version { strictly("1.33") }
+    }
+
+    testImplementation(project(path: ':domain', configuration: 'testClasses'))
+
     testImplementation('org.flywaydb:flyway-core')
     testImplementation('org.flywaydb:flyway-mysql')
 

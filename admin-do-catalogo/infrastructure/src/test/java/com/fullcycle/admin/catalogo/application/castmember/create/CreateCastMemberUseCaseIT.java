@@ -1,35 +1,31 @@
 package com.fullcycle.admin.catalogo.application.castmember.create;
 
 import com.fullcycle.admin.catalogo.domain.Fixture;
-import com.fullcycle.admin.catalogo.application.UseCaseTest;
+import com.fullcycle.admin.catalogo.IntegrationTest;
 import com.fullcycle.admin.catalogo.domain.castmember.CastMemberGateway;
 import com.fullcycle.admin.catalogo.domain.castmember.CastMemberType;
 import com.fullcycle.admin.catalogo.domain.exceptions.NotificationException;
+import com.fullcycle.admin.catalogo.infrastructure.castmember.persistence.CastMemberRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 
-import java.util.List;
-import java.util.Objects;
-
-import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
-public class CreateCastMemberUseCaseTest extends UseCaseTest {
+@IntegrationTest
+public class CreateCastMemberUseCaseIT {
 
-    @InjectMocks
-    private DefaultCreateCastMemberUseCase useCase;
+    @Autowired
+    private CreateCastMemberUseCase useCase;
 
-    @Mock
+    @Autowired
+    private CastMemberRepository castMemberRepository;
+
+    @SpyBean
     private CastMemberGateway castMemberGateway;
-
-    @Override
-    protected List<Object> getMocks() {
-        return List.of(castMemberGateway);
-    }
 
     @Test
     public void givenAValidCommand_whenCallsCreateCastMember_shouldReturnIt() {
@@ -39,9 +35,6 @@ public class CreateCastMemberUseCaseTest extends UseCaseTest {
 
         final var aCommand = CreateCastMemberCommand.with(expectedName, expectedType);
 
-        when(castMemberGateway.create(any()))
-                .thenAnswer(returnsFirstArg());
-
         // when
         final var actualOutput = useCase.execute(aCommand);
 
@@ -49,13 +42,15 @@ public class CreateCastMemberUseCaseTest extends UseCaseTest {
         Assertions.assertNotNull(actualOutput);
         Assertions.assertNotNull(actualOutput.id());
 
-        verify(castMemberGateway).create(argThat(aMember ->
-                Objects.nonNull(aMember.getId())
-                        && Objects.equals(expectedName, aMember.getName())
-                        && Objects.equals(expectedType, aMember.getType())
-                        && Objects.nonNull(aMember.getCreatedAt())
-                        && Objects.nonNull(aMember.getUpdatedAt())
-        ));
+        final var actualMember = this.castMemberRepository.findById(actualOutput.id()).get();
+
+        Assertions.assertEquals(expectedName, actualMember.getName());
+        Assertions.assertEquals(expectedType, actualMember.getType());
+        Assertions.assertNotNull(actualMember.getCreatedAt());
+        Assertions.assertNotNull(actualMember.getUpdatedAt());
+        Assertions.assertEquals(actualMember.getCreatedAt(), actualMember.getUpdatedAt());
+
+        verify(castMemberGateway).create(any());
     }
 
     @Test
