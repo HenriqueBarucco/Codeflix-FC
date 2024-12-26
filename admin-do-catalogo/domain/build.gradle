@@ -31,3 +31,7 @@ task testJar(type: Jar) {
 artifacts {
     testClasses testJar
 }
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
