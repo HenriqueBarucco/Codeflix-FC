@@ -20,8 +20,6 @@ dependencies {
     testImplementation 'org.mockito:mockito-junit-jupiter:4.5.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
-    testImplementation 'com.github.javafaker:javafaker:1.0.2'
-
     testImplementation(project(path: ':domain', configuration: 'testClasses'))
 }
 

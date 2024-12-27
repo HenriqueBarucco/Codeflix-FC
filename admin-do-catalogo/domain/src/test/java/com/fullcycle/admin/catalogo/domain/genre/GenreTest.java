@@ -229,7 +229,7 @@ public class GenreTest extends UnitTest {
     }
 
     @Test
-    public void givenAValidGenre_whenCallUpdateWithNullCategories_shouldReceiveOK() {
+    public void givenAValidGenre_whenCallUpdateWithNullCategories_shouldReceiveOK() throws InterruptedException {
         final var expectedName = "Ação";
         final var expectedIsActive = true;
         final var expectedCategories = new ArrayList<CategoryId>();
@@ -238,6 +238,8 @@ public class GenreTest extends UnitTest {
 
         final var actualCreatedAt = actualGenre.getCreatedAt();
         final var actualUpdatedAt = actualGenre.getUpdatedAt();
+
+        Thread.sleep(10);
 
         Assertions.assertDoesNotThrow(() -> {
             actualGenre.update(expectedName, expectedIsActive, null);
