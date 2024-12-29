@@ -1,6 +1,7 @@
 package com.fullcycle.admin.catalogo.infrastructure.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fullcycle.admin.catalogo.ApiTest;
 import com.fullcycle.admin.catalogo.ControllerTest;
 import com.fullcycle.admin.catalogo.application.genre.create.CreateGenreOutput;
 import com.fullcycle.admin.catalogo.application.genre.create.CreateGenreUseCase;
@@ -78,7 +79,7 @@ public class GenreAPITest {
 
         // when
         final var aRequest = post("/genres")
-                // .with(ApiTest.GENRES_JWT)
+                 .with(ApiTest.GENRES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(aCommand));
 
@@ -114,7 +115,7 @@ public class GenreAPITest {
 
         // when
         final var aRequest = post("/genres")
-                // .with(ApiTest.GENRES_JWT)
+                 .with(ApiTest.GENRES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(aCommand));
 
@@ -156,7 +157,7 @@ public class GenreAPITest {
 
         // when
         final var aRequest = get("/genres/{id}", expectedId)
-                // .with(ApiTest.GENRES_JWT)
+                 .with(ApiTest.GENRES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -187,7 +188,7 @@ public class GenreAPITest {
 
         // when
         final var aRequest = get("/genres/{id}", expectedId.getValue())
-                // .with(ApiTest.GENRES_JWT)
+                 .with(ApiTest.GENRES_JWT)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -219,7 +220,7 @@ public class GenreAPITest {
 
         // when
         final var aRequest = put("/genres/{id}", expectedId)
-                // .with(ApiTest.GENRES_JWT)
+                 .with(ApiTest.GENRES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(aCommand));
 
@@ -257,7 +258,7 @@ public class GenreAPITest {
 
         // when
         final var aRequest = put("/genres/{id}", expectedId)
-                // .with(ApiTest.GENRES_JWT)
+                 .with(ApiTest.GENRES_JWT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(aCommand));
 
@@ -287,7 +288,7 @@ public class GenreAPITest {
 
         // when
         final var aRequest = delete("/genres/{id}", expectedId)
-                // .with(ApiTest.GENRES_JWT)
+                 .with(ApiTest.GENRES_JWT)
                 .accept(MediaType.APPLICATION_JSON);
 
         final var result = this.mvc.perform(aRequest);
@@ -319,7 +320,7 @@ public class GenreAPITest {
 
         // when
         final var aRequest = get("/genres")
-                // .with(ApiTest.GENRES_JWT)
+                 .with(ApiTest.GENRES_JWT)
                 .queryParam("page", String.valueOf(expectedPage))
                 .queryParam("perPage", String.valueOf(expectedPerPage))
                 .queryParam("sort", expectedSort)
