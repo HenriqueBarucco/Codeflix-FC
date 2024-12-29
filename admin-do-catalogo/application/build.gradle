@@ -1,31 +1,12 @@
 plugins {
-    id 'java'
-    id 'org.jetbrains.kotlin.jvm'
+    id 'java-conventions'
+    id 'java-library'
 }
 
-group = 'com.fullcycle.admin.catalogo.application'
-version = '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
+group 'com.fullcycle.admin.catalogo.application'
 
 dependencies {
     implementation(project(":domain"))
 
-    implementation 'io.vavr:vavr:0.10.4'
-
-    testImplementation platform('org.junit:junit-bom:5.10.3')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation 'org.mockito:mockito-junit-jupiter:4.5.1'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-
     testImplementation(project(path: ':domain', configuration: 'testClasses'))
-}
-
-test {
-    useJUnitPlatform()
-}
-kotlin {
-    jvmToolchain(17)
 }

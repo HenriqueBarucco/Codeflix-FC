@@ -40,7 +40,7 @@ public class UpdateCategoryUseCaseTest extends UseCaseTest {
     // 5. Teste atualizar categoria passando ID inválido
 
     @Test
-    public void givenAValidCommand_whenCallsUpdateCategory_shouldReturnCategoryId() {
+    public void givenAValidCommand_whenCallsUpdateCategory_shouldReturnCategoryId() throws InterruptedException {
         final var aCategory =
                 Category.newCategory("Film", null, true);
 
@@ -61,6 +61,8 @@ public class UpdateCategoryUseCaseTest extends UseCaseTest {
 
         when(categoryGateway.update(any()))
                 .thenAnswer(returnsFirstArg());
+
+        Thread.sleep(10);
 
         final var actualOutput = useCase.execute(aCommand).get();
 

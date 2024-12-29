@@ -59,14 +59,15 @@ public class UpdateGenreUseCaseTest extends UseCaseTest {
 
         when(genreGateway.update(any()))
                 .thenAnswer(returnsFirstArg());
+
+        Thread.sleep(10);
+
         // when
         final var actualOutput = useCase.execute(aCommand);
 
         // then
         Assertions.assertNotNull(actualOutput);
         Assertions.assertEquals(expectedId.getValue(), actualOutput.id());
-
-        Thread.sleep(10);
 
         Mockito.verify(genreGateway, times(1)).findById(eq(expectedId));
 
@@ -132,7 +133,7 @@ public class UpdateGenreUseCaseTest extends UseCaseTest {
     }
 
     @Test
-    public void givenAValidCommandWithInactiveGenre_whenCallsUpdateGenre_shouldReturnGenreId() {
+    public void givenAValidCommandWithInactiveGenre_whenCallsUpdateGenre_shouldReturnGenreId() throws InterruptedException {
         // given
         final var aGenre = Genre.newGenre("acao", true);
 
@@ -156,6 +157,8 @@ public class UpdateGenreUseCaseTest extends UseCaseTest {
 
         Assertions.assertTrue(aGenre.isActive());
         Assertions.assertNull(aGenre.getDeletedAt());
+
+        Thread.sleep(10);
 
         // when
         final var actualOutput = useCase.execute(aCommand);
