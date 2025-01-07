@@ -1,7 +1,11 @@
 package com.fullcycle.catalogo.domain;
 
-
+import com.fullcycle.catalogo.domain.category.Category;
 import net.datafaker.Faker;
+
+import java.util.UUID;
+
+import static com.fullcycle.catalogo.domain.utils.InstantUtils.now;
 
 public final class Fixture {
 
@@ -33,5 +37,44 @@ public final class Fixture {
 
     public static String checksum() {
         return "03fe62de";
+    }
+
+    public static final class Categories {
+
+        public static Category aulas() {
+            return Category.with(
+                    UUID.randomUUID().toString().replace("-", ""),
+                    "Aulas",
+                    "Conteudo gravado",
+                    true,
+                    now(),
+                    now(),
+                    null
+            );
+        }
+
+        public static Category talks() {
+            return Category.with(
+                    UUID.randomUUID().toString().replace("-", ""),
+                    "Talks",
+                    "Conteudo ao vivo",
+                    false,
+                    now(),
+                    now(),
+                    now()
+            );
+        }
+
+        public static Category lives() {
+            return Category.with(
+                    UUID.randomUUID().toString().replace("-", ""),
+                    "Lives",
+                    "Conteudo ao vivo",
+                    true,
+                    now(),
+                    now(),
+                    null
+            );
+        }
     }
 }
