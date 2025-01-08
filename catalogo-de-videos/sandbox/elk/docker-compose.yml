@@ -5,7 +5,7 @@ services:
     container_name: elk_es01
     restart: on-failure
     volumes:
-      - ../.docker/es01:/usr/share/elasticsearch/data
+      - es01:/usr/share/elasticsearch/data
     environment:
       - "discovery.type=single-node"
     ports:
@@ -43,4 +43,8 @@ services:
 
 networks:
   elastic:
+    external: true
+
+volumes:
+  es01:
     external: true
