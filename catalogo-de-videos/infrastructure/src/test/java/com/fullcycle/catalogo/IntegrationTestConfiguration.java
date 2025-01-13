@@ -21,4 +21,9 @@ public class IntegrationTestConfiguration {
     public WebGraphQlSecurityInterceptor webGraphQlSecurityInterceptor() {
         return new WebGraphQlSecurityInterceptor();
     }
+
+//    @Bean
+//    public GenreRepository genreRepository() {
+//        return Mockito.mock(GenreRepository.class);
+//    }
 }
