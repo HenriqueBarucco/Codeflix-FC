@@ -2,6 +2,7 @@ package com.fullcycle.catalogo.infrastructure.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fullcycle.catalogo.infrastructure.configuration.annotations.Categories;
+import com.fullcycle.catalogo.infrastructure.configuration.annotations.Genres;
 import com.fullcycle.catalogo.infrastructure.configuration.annotations.Keycloak;
 import com.fullcycle.catalogo.infrastructure.configuration.properties.RestClientProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -25,12 +26,12 @@ public class RestClientConfig {
         return new RestClientProperties();
     }
 
-//    @Bean
-//    @ConfigurationProperties(prefix = "rest-client.genres")
-//    @Genres
-//    public RestClientProperties genreRestClientProperties() {
-//        return new RestClientProperties();
-//    }
+    @Bean
+    @ConfigurationProperties(prefix = "rest-client.genres")
+    @Genres
+    public RestClientProperties genreRestClientProperties() {
+        return new RestClientProperties();
+    }
 //
 //    @Bean
 //    @ConfigurationProperties(prefix = "rest-client.videos")
@@ -52,11 +53,11 @@ public class RestClientConfig {
         return restClient(properties, objectMapper);
     }
 
-//    @Bean
-//    @Genres
-//    public RestClient genreHttpClient(@Genres final RestClientProperties properties, final ObjectMapper objectMapper) {
-//        return restClient(properties, objectMapper);
-//    }
+    @Bean
+    @Genres
+    public RestClient genreHttpClient(@Genres final RestClientProperties properties, final ObjectMapper objectMapper) {
+        return restClient(properties, objectMapper);
+    }
 //
 //    @Bean
 //    @Videos
