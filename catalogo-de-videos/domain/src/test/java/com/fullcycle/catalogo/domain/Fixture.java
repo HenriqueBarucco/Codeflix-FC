@@ -130,7 +130,7 @@ public final class Fixture {
         public static Video systemDesign() {
             return Video.with(
                     IdUtils.uniqueId(),
-                    "System Design no Mercado Livre na prática",
+                    "System Design no Mercado Livre na pratica",
                     "O vídeo mais assistido",
                     2022,
                     Fixture.duration(),
