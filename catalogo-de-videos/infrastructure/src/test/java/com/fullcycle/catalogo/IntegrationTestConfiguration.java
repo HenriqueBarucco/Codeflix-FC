@@ -27,4 +27,9 @@ public class IntegrationTestConfiguration {
     public GenreRepository genreRepository() {
         return Mockito.mock(GenreRepository.class);
     }
+
+//    @Bean
+//    public VideoRepository videoRepository() {
+//        return Mockito.mock(VideoRepository.class);
+//    }
 }
